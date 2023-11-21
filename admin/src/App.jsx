@@ -7,6 +7,7 @@ import {
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import List from './pages/List';
 import Navbar from './components/Navbar';
 import Leftbar from './components/Leftbar';
 import styled from 'styled-components';
@@ -50,6 +51,10 @@ function App() {
         {
           path: '/',
           element: <Home />,
+        },
+        {
+          path: '/machine',
+          element: <List />,
         },
       ],
     },

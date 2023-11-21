@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   width: 250px;
@@ -11,10 +12,10 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const Item = styled.div`
+const Item = styled(Link)`
   padding: 10px 20px;
   color: #555;
-  cursor: pointer;
+  text-decoration: none;
   &:hover {
     background-color: #888;
     color: #fff;
@@ -25,10 +26,10 @@ export default function Leftbar() {
   return (
     <Container>
       <Wrapper>
-        <Item>Machines</Item>
+        <Item to="/machine">Machines</Item>
         <Item>Clients</Item>
         <Item>Pièces</Item>
-        <Item>Tech</Item>
+        <Item>Techniciens</Item>
       </Wrapper>
     </Container>
   );

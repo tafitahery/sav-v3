@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const machinesRoute = require('./routes/machines');
 const customersRoute = require('./routes/customers');
@@ -10,6 +11,7 @@ const interventionsRoute = require('./routes/interventions');
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.use('/api/machines', machinesRoute);
 app.use('/api/customers', customersRoute);
