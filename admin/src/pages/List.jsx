@@ -1,10 +1,15 @@
 import styled from '@emotion/styled';
 import DataTable from '../components/Datatable';
+import {
+  customersColumns,
+  machinesColumns,
+  partsColumns,
+  techniciansColumns,
+} from '../utils/columns';
 
 const Container = styled.div`
   width: 100%;
   display: flex;
-  justify-content: center;
 `;
 
 const Wrapper = styled.div`
@@ -35,13 +40,38 @@ const Button = styled.button`
   }
 `;
 
-export default function List() {
+// eslint-disable-next-line react/prop-types
+export default function List({ title }) {
+  let columns = [];
+  let url = '';
+
+  switch (title) {
+    case 'Machines':
+      columns = machinesColumns;
+      url = 'http://localhost:8800/api/machines';
+      break;
+    case 'Clients':
+      columns = customersColumns;
+      url = 'http://localhost:8800/api/locations';
+      break;
+    case 'Pièces':
+      columns = partsColumns;
+      url = 'http://localhost:8800/api/parts';
+      break;
+    case 'Techniciens':
+      columns = techniciansColumns;
+      url = 'http://localhost:8800/api/technicians';
+      break;
+    default:
+      break;
+  }
+
   return (
     <Container>
       <Wrapper>
-        <Title>Machines</Title>
+        <Title>{title}</Title>
         <Button>Nouveau</Button>
-        <DataTable />
+        <DataTable columns={columns} url={url} />
       </Wrapper>
     </Container>
   );

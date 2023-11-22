@@ -21,27 +21,9 @@ const Button = styled.div`
     `}
 `;
 
-export default function DataTable() {
-  const data = useFetch('http://localhost:8800/api/machines');
-
-  const columns = [
-    { field: 'name', headerName: 'Nom', width: 160 },
-    { field: 'brand', headerName: 'Marque', width: 130 },
-    {
-      field: 'model',
-      headerName: 'Model',
-      width: 160,
-    },
-    {
-      field: 'color',
-      headerName: 'Couleur',
-      sortable: false,
-      width: 90,
-      valueGetter: (params) => (params.row.color === 1 ? 'Oui' : 'Non'),
-    },
-  ];
-
-  const rows = data;
+// eslint-disable-next-line react/prop-types
+export default function DataTable({ columns, url }) {
+  const rows = useFetch(url);
 
   const actionColumn = [
     {
@@ -63,6 +45,7 @@ export default function DataTable() {
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
         rows={rows}
+        // eslint-disable-next-line react/prop-types
         columns={columns.concat(actionColumn)}
         initialState={{
           pagination: {

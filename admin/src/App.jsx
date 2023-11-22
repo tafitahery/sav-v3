@@ -53,8 +53,20 @@ function App() {
           element: <Home />,
         },
         {
-          path: '/machine',
-          element: <List />,
+          path: '/machines',
+          element: <List title="Machines" />,
+        },
+        {
+          path: '/customers',
+          element: <List title="Clients" />,
+        },
+        {
+          path: '/parts',
+          element: <List title="Pièces" />,
+        },
+        {
+          path: '/technicians',
+          element: <List title="Techniciens" />,
         },
       ],
     },

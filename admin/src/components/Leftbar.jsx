@@ -26,10 +26,10 @@ export default function Leftbar() {
   return (
     <Container>
       <Wrapper>
-        <Item to="/machine">Machines</Item>
-        <Item>Clients</Item>
-        <Item>Pièces</Item>
-        <Item>Techniciens</Item>
+        <Item to="/machines">Machines</Item>
+        <Item to="/customers">Clients</Item>
+        <Item to="/parts">Pièces</Item>
+        <Item to="/technicians">Techniciens</Item>
       </Wrapper>
     </Container>
   );
