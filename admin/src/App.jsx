@@ -11,6 +11,7 @@ import List from './pages/List';
 import Navbar from './components/Navbar';
 import Leftbar from './components/Leftbar';
 import styled from 'styled-components';
+import New from './pages/New';
 
 const Wrapper = styled.div`
   display: flex;
@@ -67,6 +68,10 @@ function App() {
         {
           path: '/technicians',
           element: <List title="Techniciens" />,
+        },
+        {
+          path: '/new',
+          element: <New />,
         },
       ],
     },

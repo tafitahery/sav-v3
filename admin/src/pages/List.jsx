@@ -6,6 +6,7 @@ import {
   partsColumns,
   techniciansColumns,
 } from '../utils/columns';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   width: 100%;
@@ -25,12 +26,13 @@ const Title = styled.h1`
   color: #555;
 `;
 
-const Button = styled.button`
+const Button = styled(Link)`
   position: absolute;
   right: 20px;
   top: 20px;
   border: none;
   border-radius: 5px;
+  text-decoration: none;
   color: white;
   background-color: #888;
   padding: 10px 20px;
@@ -70,7 +72,7 @@ export default function List({ title }) {
     <Container>
       <Wrapper>
         <Title>{title}</Title>
-        <Button>Nouveau</Button>
+        <Button to="/new">Nouveau</Button>
         <DataTable columns={columns} url={url} />
       </Wrapper>
     </Container>

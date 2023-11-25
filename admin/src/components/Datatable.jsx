@@ -1,6 +1,8 @@
 import { DataGrid } from '@mui/x-data-grid';
 import { useFetch } from '../utils/hooks';
 import styled from '@emotion/styled';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const Container = styled.div`
   display: flex;
@@ -23,7 +25,22 @@ const Button = styled.div`
 
 // eslint-disable-next-line react/prop-types
 export default function DataTable({ columns, url }) {
-  const rows = useFetch(url);
+  const [rows, setRows] = useState([]);
+  const data = useFetch(url);
+
+  useEffect(() => {
+    setRows(data);
+  }, [data]);
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(url + '/' + id);
+      const { data } = await axios.get(url);
+      setRows(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const actionColumn = [
     {
@@ -34,7 +51,9 @@ export default function DataTable({ columns, url }) {
         return (
           <Container>
             <Button type="update">Modif.</Button>
-            <Button type="delete">Suppr.</Button>
+            <Button type="delete" onClick={() => handleDelete(params.row.id)}>
+              Suppr.
+            </Button>
           </Container>
         );
       },
