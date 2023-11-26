@@ -6,7 +6,7 @@ import {
   partsColumns,
   techniciansColumns,
 } from '../utils/columns';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   width: 100%;
@@ -26,13 +26,12 @@ const Title = styled.h1`
   color: #555;
 `;
 
-const Button = styled(Link)`
+const Button = styled.div`
   position: absolute;
   right: 20px;
   top: 20px;
   border: none;
   border-radius: 5px;
-  text-decoration: none;
   color: white;
   background-color: #888;
   padding: 10px 20px;
@@ -44,6 +43,7 @@ const Button = styled(Link)`
 
 // eslint-disable-next-line react/prop-types
 export default function List({ title }) {
+  const navigate = useNavigate();
   let columns = [];
   let url = '';
 
@@ -68,11 +68,15 @@ export default function List({ title }) {
       break;
   }
 
+  const handleClick = () => {
+    navigate('/new', { state: { url } });
+  };
+
   return (
     <Container>
       <Wrapper>
         <Title>{title}</Title>
-        <Button to="/new">Nouveau</Button>
+        <Button onClick={handleClick}>Nouveau</Button>
         <DataTable columns={columns} url={url} />
       </Wrapper>
     </Container>
