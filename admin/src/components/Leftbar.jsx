@@ -28,6 +28,7 @@ export default function Leftbar() {
       <Wrapper>
         <Item to="/machines">Machines</Item>
         <Item to="/customers">Clients</Item>
+        <Item to="/locations">Emplacement</Item>
         <Item to="/parts">Pièces</Item>
         <Item to="/technicians">Techniciens</Item>
       </Wrapper>

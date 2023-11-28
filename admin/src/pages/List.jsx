@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import DataTable from '../components/Datatable';
 import {
   customersColumns,
+  locationsColumns,
   machinesColumns,
   partsColumns,
   techniciansColumns,
@@ -54,6 +55,10 @@ export default function List({ title }) {
       break;
     case 'Clients':
       columns = customersColumns;
+      url = 'http://localhost:8800/api/customers';
+      break;
+    case 'Emplacements':
+      columns = locationsColumns;
       url = 'http://localhost:8800/api/locations';
       break;
     case 'Pièces':
@@ -69,7 +74,7 @@ export default function List({ title }) {
   }
 
   const handleClick = () => {
-    navigate('/new', { state: { url } });
+    navigate('/new', { state: { url, title } });
   };
 
   return (

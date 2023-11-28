@@ -1,7 +1,14 @@
 import axios from 'axios';
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import {
+  customerForm,
+  locationForm,
+  machineForm,
+  partForm,
+  technicianForm,
+} from '../utils/newForm';
 
 const Container = styled.div`
   display: flex;
@@ -32,7 +39,7 @@ const InputContainer = styled.div`
 
 const Label = styled.label`
   color: #888;
-  width: 100px;
+  width: 125px;
 `;
 
 const Input = styled.input`
@@ -73,14 +80,61 @@ const Span = styled.span`
 `;
 
 export default function New() {
-  const [inputs, setInputs] = useState({
-    name: '',
-    brand: '',
-    model: '',
-    color: 'null',
-  });
+  const [inputs, setInputs] = useState({});
   const [error, setError] = useState(null);
   const { state } = useLocation();
+  const navigate = useNavigate();
+  const [customers, setCustomers] = useState([]);
+  const [machines, setMachines] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await axios.get('http://localhost:8800/api/customers');
+      setCustomers(data);
+    };
+    fetchData();
+  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await axios.get('http://localhost:8800/api/machines');
+      setMachines(data);
+    };
+    fetchData();
+  }, []);
+
+  let forms = [];
+  let title = '';
+  let link = '';
+
+  switch (state.title) {
+    case 'Machines':
+      forms = machineForm;
+      title = 'Nouvelle machine';
+      link = '/machines';
+      break;
+    case 'Clients':
+      forms = customerForm;
+      title = 'Nouveau client';
+      link = '/customers';
+      break;
+    case 'Emplacements':
+      forms = locationForm;
+      title = 'Nouvel emplacement';
+      link = '/locations';
+      break;
+    case 'Pièces':
+      forms = partForm;
+      title = 'Nouvelle pièces';
+      link = '/parts';
+      break;
+    case 'Techniciens':
+      forms = technicianForm;
+      title = 'Nouveau technicien';
+      link = '/technicians';
+      break;
+    default:
+      break;
+  }
 
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -88,10 +142,10 @@ export default function New() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = { ...inputs, color: inputs.color === 'yes' ? true : false };
+    let data = { ...inputs, color: inputs.color === 'yes' ? true : false };
     try {
       await axios.post(state.url, data);
-      setInputs({ name: 'null', brand: '', model: '', color: 'null' });
+      navigate(link);
       setError(false);
     } catch (err) {
       console.log(err);
@@ -102,46 +156,49 @@ export default function New() {
   return (
     <Container>
       <Wrapper>
-        <Title>Nouvelle machine</Title>
+        <Title>{title}</Title>
         <Form onSubmit={handleSubmit}>
-          <InputContainer>
-            <Label>Type</Label>
-            <Select name="name" onChange={handleChange} value={inputs.name}>
-              <Option value={null}> --- </Option>
-              <Option value="Multifonction">Multifonction</Option>
-              <Option value="Caisse">Caisse</Option>
-            </Select>
-          </InputContainer>
-          <InputContainer>
-            <Label>Marque</Label>
-            <Input
-              type="text"
-              name="brand"
-              placeholder="Marque"
-              required
-              onChange={handleChange}
-              value={inputs.brand}
-            />
-          </InputContainer>
-          <InputContainer>
-            <Label>Modèle</Label>
-            <Input
-              type="text"
-              name="model"
-              placeholder="Modèle"
-              required
-              onChange={handleChange}
-              value={inputs.model}
-            />
-          </InputContainer>
-          <InputContainer>
-            <Label>Couleur</Label>
-            <Select name="color" onChange={handleChange} value={inputs.color}>
-              <Option value=""> --- </Option>
-              <Option value="yes">Oui</Option>
-              <Option value="no">Non</Option>
-            </Select>
-          </InputContainer>
+          {forms.map((form) => (
+            <InputContainer key={form.id}>
+              <Label>{form.label}</Label>
+              {form.inputType === 'select' ? (
+                <Select
+                  name={form.name}
+                  onChange={handleChange}
+                  value={inputs[form.name]}
+                  required={form.required}
+                >
+                  <Option value=""> --- </Option>
+                  {form.data
+                    ? form.data === 'customer'
+                      ? customers.map((customer) => (
+                          <Option value={customer.id} key={customer.id}>
+                            {customer.name}
+                          </Option>
+                        ))
+                      : machines.map((machine) => (
+                          <Option value={machine.id} key={machine.id}>
+                            {machine.model}
+                          </Option>
+                        ))
+                    : form.options.map((option, index) => (
+                        <Option value={option.value} key={index}>
+                          {option.option}
+                        </Option>
+                      ))}
+                </Select>
+              ) : (
+                <Input
+                  type={form.type}
+                  name={form.name}
+                  placeholder={form.placeholder}
+                  required={form.required}
+                  onChange={handleChange}
+                  value={inputs[form.name]}
+                />
+              )}
+            </InputContainer>
+          ))}
           <Button>Valider</Button>
           {error !== null &&
             (error ? (

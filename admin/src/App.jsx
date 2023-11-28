@@ -62,6 +62,10 @@ function App() {
           element: <List title="Clients" />,
         },
         {
+          path: '/locations',
+          element: <List title="Emplacements" />,
+        },
+        {
           path: '/parts',
           element: <List title="Pièces" />,
         },

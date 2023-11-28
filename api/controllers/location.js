@@ -2,9 +2,9 @@ const { db } = require('../db');
 
 exports.addLocation = (req, res) => {
   const q =
-    'INSERT INTO location (name, customer_id, machine_id, serial_number, counter_BW, counter_C, contract) VALUES (?)';
+    'INSERT INTO location (location_name, customer_id, machine_id, serial_number, counter_BW, counter_C, contract) VALUES (?)';
   const values = [
-    req.body.name,
+    req.body.location_name,
     req.body.customer_id,
     req.body.machine_id,
     req.body.serial_number,
@@ -45,9 +45,9 @@ exports.getLocation = (req, res) => {
 
 exports.updateLocation = (req, res) => {
   const q =
-    'UPDATE location SET name = ?, customer_id = ?, machine_id = ?, serial_number = ?, counter_BW = ?, counter_C = ?, contract = ? WHERE id = ?';
+    'UPDATE location SET location_name = ?, customer_id = ?, machine_id = ?, serial_number = ?, counter_BW = ?, counter_C = ?, contract = ? WHERE id = ?';
   const values = [
-    req.body.name,
+    req.body.location_name,
     req.body.customer_id,
     req.body.machine_id,
     req.body.serial_number,

@@ -16,9 +16,15 @@ export const machinesColumns = [
 ];
 
 export const customersColumns = [
-  { field: 'customer', headerName: 'Nom', width: 120 },
+  { field: 'name', headerName: 'Nom', width: 200 },
+  { field: 'address', headerName: 'Adresse', width: 130 },
+];
+
+export const locationsColumns = [
+  { field: 'customer', headerName: 'Nom', width: 130 },
+  { field: 'address', headerName: 'Adresse', width: 130 },
+  { field: 'location', headerName: 'Emplacement', width: 130 },
   { field: 'machineModel', headerName: 'Machine', width: 90 },
-  { field: 'location', headerName: 'Emplacement', width: 160 },
   { field: 'serialNumber', headerName: 'S/N', width: 120 },
   { field: 'counterBlack', headerName: 'Noir', width: 90 },
   { field: 'counterColor', headerName: 'Couleur', width: 90 },
