@@ -112,7 +112,7 @@ export default function New() {
   const [inputs, setInputs] = useState({});
 
   useEffect(() => {
-    setInputs(data);
+    setInputs({ ...data, color: data.color ? 'yes' : 'no' });
   }, [data]);
 
   let forms = [];
