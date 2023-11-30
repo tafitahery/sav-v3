@@ -80,12 +80,12 @@ const Span = styled.span`
 `;
 
 export default function New() {
-  const [inputs, setInputs] = useState({});
-  const [error, setError] = useState(null);
   const { state } = useLocation();
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const [customers, setCustomers] = useState([]);
   const [machines, setMachines] = useState([]);
+  const [data, setData] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -101,6 +101,19 @@ export default function New() {
     };
     fetchData();
   }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await axios.get(state.url + '/' + state.id);
+      setData(data);
+    };
+    fetchData();
+  }, [state.id, state.url]);
+
+  const [inputs, setInputs] = useState({});
+
+  useEffect(() => {
+    setInputs(data);
+  }, [data]);
 
   let forms = [];
   let title = '';
@@ -109,27 +122,27 @@ export default function New() {
   switch (state.title) {
     case 'Machines':
       forms = machineForm;
-      title = 'Nouvelle machine';
+      title = state.id ? 'Modification machine' : 'Nouvelle machine';
       link = '/machines';
       break;
     case 'Clients':
       forms = customerForm;
-      title = 'Nouveau client';
+      title = state.id ? 'Modification client' : 'Nouveau client';
       link = '/customers';
       break;
     case 'Emplacements':
       forms = locationForm;
-      title = 'Nouvel emplacement';
+      title = state.id ? 'Modification emplacement' : 'Nouvel emplacement';
       link = '/locations';
       break;
     case 'Pièces':
       forms = partForm;
-      title = 'Nouvelle pièces';
+      title = state.id ? 'Modification pièces' : 'Nouvelle pièces';
       link = '/parts';
       break;
     case 'Techniciens':
       forms = technicianForm;
-      title = 'Nouveau technicien';
+      title = state.id ? 'Modification technicien' : 'Nouveau technicien';
       link = '/technicians';
       break;
     default:

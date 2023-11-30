@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.34, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.35, for Linux (x86_64)
 --
 -- Host: localhost    Database: sav
 -- ------------------------------------------------------
--- Server version	8.0.34-0ubuntu0.23.04.1
+-- Server version	8.0.35-0ubuntu0.23.10.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,7 +27,7 @@ CREATE TABLE `customer` (
   `name` varchar(255) NOT NULL,
   `address` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (2,'ULTRAMAILLE','Ambatomaro'),(3,'FLOREAL','Andraharo'),(4,'COMDATA','Ivandry');
+INSERT INTO `customer` VALUES (4,'COMDATA','Ivandry'),(5,'OTI','Tamatave'),(6,'FLOREAL','Andraharo'),(7,'ISCAM','Ankadifotsy');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -182,7 +182,7 @@ DROP TABLE IF EXISTS `location`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `location` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `location_name` varchar(255) DEFAULT NULL,
   `customer_id` int NOT NULL,
   `machine_id` int NOT NULL,
   `serial_number` varchar(255) DEFAULT NULL,
@@ -195,7 +195,7 @@ CREATE TABLE `location` (
   CONSTRAINT `location_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
   CONSTRAINT `location_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `location_ibfk_3` FOREIGN KEY (`machine_id`) REFERENCES `machine` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -204,7 +204,7 @@ CREATE TABLE `location` (
 
 LOCK TABLES `location` WRITE;
 /*!40000 ALTER TABLE `location` DISABLE KEYS */;
-INSERT INTO `location` VALUES (3,'Service Général',4,6,'12345678900',135669,'Location',15304),(4,'Recrutement',4,6,'78945612300',48332,'Location',12745);
+INSERT INTO `location` VALUES (3,'Service Général',4,6,'12345678900',135669,'Location',15304),(6,'Recrutement',4,6,'78945612300',48332,'Location',12745),(7,'Planning',6,15,'7539146082',0,'Location',0),(8,'Acceuil',7,16,'3692581470',0,'Location',0);
 /*!40000 ALTER TABLE `location` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,6 +219,7 @@ SET @saved_cs_client     = @@character_set_client;
 /*!50001 CREATE VIEW `location_with_customer_machine_vw` AS SELECT 
  1 AS `id`,
  1 AS `customer`,
+ 1 AS `address`,
  1 AS `machineName`,
  1 AS `machineModel`,
  1 AS `location`,
@@ -239,6 +240,7 @@ SET @saved_cs_client     = @@character_set_client;
 /*!50001 CREATE VIEW `location_with_customer_vw` AS SELECT 
  1 AS `id`,
  1 AS `customer`,
+ 1 AS `address`,
  1 AS `machine_id`,
  1 AS `location`,
  1 AS `serial_number`,
@@ -261,7 +263,7 @@ CREATE TABLE `machine` (
   `model` varchar(50) DEFAULT NULL,
   `color` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,7 +272,7 @@ CREATE TABLE `machine` (
 
 LOCK TABLES `machine` WRITE;
 /*!40000 ALTER TABLE `machine` DISABLE KEYS */;
-INSERT INTO `machine` VALUES (4,'Multifonction','SHARP','BP-10C20',1),(5,'Multifonction','SHARP','AR-7024',0),(6,'Multifonction','SHARP','DX-2000',1);
+INSERT INTO `machine` VALUES (6,'Multifonction','SHARP','DX-2000',1),(14,'Multifonction','Sharp','BP-10C20',1),(15,'Multifonction','Sharp','MX-M264',0),(16,'Multifonction','Sharp','BP-20M22',0);
 /*!40000 ALTER TABLE `machine` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -286,7 +288,7 @@ CREATE TABLE `part` (
   `name` varchar(255) NOT NULL,
   `reference` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -295,7 +297,7 @@ CREATE TABLE `part` (
 
 LOCK TABLES `part` WRITE;
 /*!40000 ALTER TABLE `part` DISABLE KEYS */;
-INSERT INTO `part` VALUES (3,'Developpeur','MX-312-FV');
+INSERT INTO `part` VALUES (3,'Developpeur','MX-312-FV'),(5,'Tambour','MX-312-FR'),(6,'Raclette','ULCEZ001QSZZ');
 /*!40000 ALTER TABLE `part` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -310,7 +312,7 @@ CREATE TABLE `technician` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -319,7 +321,7 @@ CREATE TABLE `technician` (
 
 LOCK TABLES `technician` WRITE;
 /*!40000 ALTER TABLE `technician` DISABLE KEYS */;
-INSERT INTO `technician` VALUES (2,'Rajo');
+INSERT INTO `technician` VALUES (2,'Rajo'),(6,'Tafita'),(7,'Lanto');
 /*!40000 ALTER TABLE `technician` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -354,7 +356,7 @@ UNLOCK TABLES;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `location_with_customer_machine_vw` AS select `location_with_customer_vw`.`id` AS `id`,`location_with_customer_vw`.`customer` AS `customer`,`machine`.`name` AS `machineName`,`machine`.`model` AS `machineModel`,`location_with_customer_vw`.`location` AS `location`,`location_with_customer_vw`.`serial_number` AS `serialNumber`,`location_with_customer_vw`.`counterBlack` AS `counterBlack`,`location_with_customer_vw`.`counterColor` AS `counterColor`,`location_with_customer_vw`.`contract` AS `contract` from (`location_with_customer_vw` join `machine` on((`location_with_customer_vw`.`machine_id` = `machine`.`id`))) */;
+/*!50001 VIEW `location_with_customer_machine_vw` AS select `location_with_customer_vw`.`id` AS `id`,`location_with_customer_vw`.`customer` AS `customer`,`location_with_customer_vw`.`address` AS `address`,`machine`.`name` AS `machineName`,`machine`.`model` AS `machineModel`,`location_with_customer_vw`.`location` AS `location`,`location_with_customer_vw`.`serial_number` AS `serialNumber`,`location_with_customer_vw`.`counterBlack` AS `counterBlack`,`location_with_customer_vw`.`counterColor` AS `counterColor`,`location_with_customer_vw`.`contract` AS `contract` from (`location_with_customer_vw` join `machine` on((`location_with_customer_vw`.`machine_id` = `machine`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -372,7 +374,7 @@ UNLOCK TABLES;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `location_with_customer_vw` AS select `location`.`id` AS `id`,`customer`.`name` AS `customer`,`location`.`machine_id` AS `machine_id`,`location`.`name` AS `location`,`location`.`serial_number` AS `serial_number`,`location`.`counter_BW` AS `counterBlack`,`location`.`counter_C` AS `counterColor`,`location`.`contract` AS `contract` from (`location` join `customer` on((`location`.`customer_id` = `customer`.`id`))) */;
+/*!50001 VIEW `location_with_customer_vw` AS select `location`.`id` AS `id`,`customer`.`name` AS `customer`,`customer`.`address` AS `address`,`location`.`machine_id` AS `machine_id`,`location`.`location_name` AS `location`,`location`.`serial_number` AS `serial_number`,`location`.`counter_BW` AS `counterBlack`,`location`.`counter_C` AS `counterColor`,`location`.`contract` AS `contract` from (`location` join `customer` on((`location`.`customer_id` = `customer`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -386,4 +388,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-26 17:43:04
+-- Dump completed on 2023-11-28 23:01:54

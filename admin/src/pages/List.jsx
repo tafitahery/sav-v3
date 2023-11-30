@@ -82,7 +82,7 @@ export default function List({ title }) {
       <Wrapper>
         <Title>{title}</Title>
         <Button onClick={handleClick}>Nouveau</Button>
-        <DataTable columns={columns} url={url} />
+        <DataTable columns={columns} url={url} title={title} />
       </Wrapper>
     </Container>
   );
